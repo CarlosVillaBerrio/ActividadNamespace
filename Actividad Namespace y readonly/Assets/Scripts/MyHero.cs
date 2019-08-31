@@ -6,7 +6,7 @@ using NPC.Ally;
 public class MyHero : MonoBehaviour
 {
     static System.Random r = new System.Random();
-    public readonly float velHeroe = (float)r.NextDouble()*4;
+    public readonly float velHeroe = (float)r.NextDouble()*5;
 
     VillagerStruct datosAldeano;
     ZombieStruct datosZombie;

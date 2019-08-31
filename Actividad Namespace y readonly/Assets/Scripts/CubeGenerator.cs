@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using NPC.Enemy;
 using NPC.Ally;
 using TMPro;
@@ -10,6 +11,7 @@ public class CubeGenerator : MonoBehaviour
     static System.Random r = new System.Random();
     public readonly int limiteMinimo = r.Next(5,15);
     const int limiteMaximo = 25;
+
     int nAlly = 0, nEnemy = 0, limiteGenerado,generadorRandom;
     // HEROE VARIABLES Y FUNCION GENERADORA
     public GameObject cuboHeroe;
@@ -85,39 +87,25 @@ public class CubeGenerator : MonoBehaviour
 
     void Start()
     {
-        limiteGenerado = Random.Range(limiteMinimo, limiteMaximo);
+        limiteGenerado = Random.Range(limiteMinimo, limiteMaximo+1);
+        // CREACION DEL CONJUNTO DE LOS ALDEANOS
+        allys = new GameObject();
+        allys.name = "Allys";
+        // CREACION DEL CONJUNTO DE LOS ZOMBIS
+        enemys = new GameObject();
+        enemys.name = "Enemys";
         for (int i = 0; i < limiteGenerado; i++)
         {
             generadorRandom = Random.Range(0, 2);
             if (generadorRandom == 0)
-                nEnemy++;
+                CreacionZombie(enemys);
+
             if (generadorRandom == 1)
-                nAlly++;
+                CreacionAldeano(allys);
         }
-
-        // CREACION DE LOS ZOMBIS
-        enemys = new GameObject();
-        enemys.name = "Enemys";
-        for (int i = 0; i < nEnemy; i++) // CICLO QUE CREA UN ZOMBIE POR CADA ITERACION
-        {
-            CreacionZombie(enemys);
-        }
-
-        // CREACION DE LOS ALDEANOS
-        allys = new GameObject();
-        allys.name = "Allys";
-        for (int i = 0; i < nAlly; i++) // CICLO QUE CREA UN ALDEANO POR CADA ITERACION
-        {
-            CreacionAldeano(allys);
-        }
-
         // CREACION DEL HEROE
         CreacionHeroe();
 
-    }
-
-    void Update()
-    {
         var zombieList = FindObjectsOfType<MyZombie>();
         foreach (var item in zombieList)
         {
